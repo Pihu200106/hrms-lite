@@ -20,7 +20,6 @@ function Employees() {
   const loadEmployees = async () => {
     setLoading(true);
     const data = await getEmployees();
-    console.log("EMPLOYEE LIST:", data);
     setEmployees(data);
     setLoading(false);
   };
@@ -41,11 +40,7 @@ function Employees() {
       department: form.department.trim(),
     };
 
-    console.log("ADDING:", payload);   // ⭐ debug
-
     const res = await addEmployee(payload);
-
-    console.log("ADD RESPONSE:", res); // ⭐ debug
 
     if (res.detail) {
       alert(res.detail);
@@ -68,8 +63,6 @@ function Employees() {
   const handleDelete = async (id) => {
     const res = await deleteEmployee(id);
 
-    console.log("DELETE RESPONSE:", res);
-
     if (res.detail) {
       alert(res.detail);
       return;
@@ -80,44 +73,53 @@ function Employees() {
   };
 
   return (
-    <div>
-      <h2 className="text-xl font-bold mb-4">Employee Management</h2>
+    <div className="space-y-8">
+      <h2 className="text-3xl font-semibold tracking-tight">
+        Employee Management
+      </h2>
 
       {/* Add Employee */}
-      <form onSubmit={handleSubmit} className="grid grid-cols-5 gap-2 mb-6">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white shadow-lg rounded-2xl p-6 grid md:grid-cols-5 gap-3"
+      >
         <input
-          className="border p-2 rounded"
+          className="border px-3 py-2 rounded-lg"
           name="employee_id"
           placeholder="Employee ID"
           value={form.employee_id}
           onChange={handleChange}
           required
         />
+
         <input
-          className="border p-2 rounded"
+          className="border px-3 py-2 rounded-lg"
           name="full_name"
           placeholder="Full Name"
           value={form.full_name}
           onChange={handleChange}
           required
         />
+
         <input
-          className="border p-2 rounded"
+          className="border px-3 py-2 rounded-lg"
           name="email"
           placeholder="Email"
           value={form.email}
           onChange={handleChange}
           required
         />
+
         <input
-          className="border p-2 rounded"
+          className="border px-3 py-2 rounded-lg"
           name="department"
           placeholder="Department"
           value={form.department}
           onChange={handleChange}
           required
         />
-        <button className="bg-black text-white rounded">
+
+        <button className="bg-black text-white rounded-xl">
           Add
         </button>
       </form>
@@ -128,31 +130,35 @@ function Employees() {
       ) : employees.length === 0 ? (
         <p>No employees found.</p>
       ) : (
-        <div className="bg-white shadow rounded overflow-hidden">
-          <table className="w-full">
+        <div className="bg-white shadow-lg rounded-2xl overflow-hidden">
+          <table className="w-full text-sm">
             <thead className="bg-gray-100">
               <tr>
-                <th>ID</th>
-                <th>Employee ID</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Department</th>
-                <th></th>
+                <th className="px-6 py-3 text-left font-semibold">ID</th>
+                <th className="px-6 py-3 text-left font-semibold">
+                  Employee ID
+                </th>
+                <th className="px-6 py-3 text-left font-semibold">Name</th>
+                <th className="px-6 py-3 text-left font-semibold">Email</th>
+                <th className="px-6 py-3 text-left font-semibold">
+                  Department
+                </th>
+                <th className="px-6 py-3"></th>
               </tr>
             </thead>
 
             <tbody>
               {employees.map((e) => (
-                <tr key={e.id} className="hover:bg-gray-50">
-                  <td>{e.id}</td>
-                  <td>{e.employee_id}</td>
-                  <td>{e.full_name}</td>
-                  <td>{e.email}</td>
-                  <td>{e.department}</td>
-                  <td>
+                <tr key={e.id} className="border-t hover:bg-gray-50">
+                  <td className="px-6 py-3">{e.id}</td>
+                  <td className="px-6 py-3">{e.employee_id}</td>
+                  <td className="px-6 py-3">{e.full_name}</td>
+                  <td className="px-6 py-3">{e.email}</td>
+                  <td className="px-6 py-3">{e.department}</td>
+                  <td className="px-6 py-3">
                     <button
                       onClick={() => handleDelete(e.id)}
-                      className="bg-red-500 text-white px-3 py-1 rounded"
+                      className="bg-red-500 text-white px-3 py-1 rounded-lg"
                     >
                       Delete
                     </button>
@@ -160,7 +166,6 @@ function Employees() {
                 </tr>
               ))}
             </tbody>
-
           </table>
         </div>
       )}
