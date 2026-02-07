@@ -22,8 +22,9 @@ def get_db():
 @router.post("/", response_model=AttendanceResponse)
 def mark_attendance(data: AttendanceCreate, db: Session = Depends(get_db)):
 
-    # check employee exists
+    # ✅ search using numeric ID
     emp = db.query(Employee).filter(Employee.id == data.employee_id).first()
+
     if not emp:
         raise HTTPException(status_code=404, detail="Employee not found")
 
@@ -40,7 +41,9 @@ def mark_attendance(data: AttendanceCreate, db: Session = Depends(get_db)):
     return record
 
 
-# 📋 Get Attendance of Employee
+# 📋 Get Attendance
 @router.get("/{employee_id}", response_model=List[AttendanceResponse])
 def get_attendance(employee_id: int, db: Session = Depends(get_db)):
-    return db.query(Attendance).filter(Attendance.employee_id == employee_id).all()
+    return db.query(Attendance).filter(
+        Attendance.employee_id == employee_id
+    ).all()

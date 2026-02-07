@@ -5,14 +5,11 @@ from datetime import date
 class AttendanceCreate(BaseModel):
     employee_id: int
     date: date
-    status: str   # Present / Absent
-
-
-class AttendanceResponse(BaseModel):
-    id: int
-    employee_id: int
-    date: date
     status: str
+
+
+class AttendanceResponse(AttendanceCreate):
+    id: int
 
     class Config:
         from_attributes = True
