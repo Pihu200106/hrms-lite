@@ -86,19 +86,21 @@ DATABASE_URL=mysql+pymysql://USER:PASSWORD@localhost/hrms_lite
 Run server:
 
 uvicorn main:app --reload
+
 Backend runs on:
-
 http://127.0.0.1:8000
-Swagger docs:
 
+Swagger docs:
 http://127.0.0.1:8000/docs
+
 💻 Frontend Setup
 cd frontend
 npm install
 npm start
-Runs on:
 
+Runs on:
 http://localhost:3000
+
 🔌 API Endpoints
 Employees
 POST /employees/
